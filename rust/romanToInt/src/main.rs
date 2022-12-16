@@ -1,10 +1,11 @@
-use std::io;
+use std::io::{self, Write};
 use roman_to_int::roman_to_int;
 
 fn main() -> ! {
     let mut buffer = String::new();
     loop {
-        println!("Enter a Roman numeral: ");
+        print!("Enter a Roman numeral: ");
+        io::stdout().flush().unwrap();
         match io::stdin().read_line(&mut buffer) {
             Ok(_) => {
                 let trimmed = buffer.trim().to_uppercase();
