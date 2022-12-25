@@ -41,5 +41,6 @@ mod tests {
     #[test]
     fn test_prefixes() {
         assert_eq!("ab", longest_common_prefix(&["abcd", "ab", "abdcdef"]));
+        assert_eq!("", longest_common_prefix(&["abcd", "bc", "abdcdef"]));
     }
 }
