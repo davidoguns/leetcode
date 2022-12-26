@@ -8,7 +8,6 @@ pub fn longest_common_prefix(strings: &[&str]) -> String {
                 s.chars().enumerate().for_each(|(idx, ch)| {
                     match_vec.push((idx, ch));
                 });
-                println!("match vec for first: {}", s);
             }
             _ => {
                 let mut schars_itr = s.chars().into_iter();
