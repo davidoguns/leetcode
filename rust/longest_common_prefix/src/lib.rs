@@ -1,25 +1,27 @@
 pub fn longest_common_prefix(strs: &[&str]) -> String {
     if let Some(first_string) = strs.get(0) {
         let mut split_off_idx = first_string.chars().count();
-        'string_iteration: for (string_index, s) in strs.iter().enumerate() {
-            match string_index {
-                0 => { }
-                _ => {
-                    for character_index_tuple in s.chars().enumerate() {
-                        if character_index_tuple.0 > split_off_idx {
-                            continue 'string_iteration;
-                        }
-                        if let Some(nth_char) = first_string.chars().nth(character_index_tuple.0) {
-                            if nth_char != character_index_tuple.1 {
-                                split_off_idx = character_index_tuple.0;
-                                continue 'string_iteration;
-                            }
-                        }
-                    }
-                    if s.chars().count() < split_off_idx {
-                        split_off_idx = s.chars().count();
+        'string_iteration: for s in strs.iter().skip(1) {
+            let mut char_idx: usize = 0;
+            let mut first_string_citr = first_string.chars().into_iter();
+            for character in s.chars() {
+                //don't compare more characters than the current longest match
+                if char_idx > split_off_idx {
+                    continue 'string_iteration;
+                }
+                //if there is a next character in the current longest match
+                if let Some(nth_char) = first_string_citr.next() {
+                    if nth_char != character {
+                        split_off_idx = char_idx;
+                        continue 'string_iteration;
                     }
                 }
+                char_idx += 1;
+            }
+            //if current string was fully iterated over, it may still be shorter
+            //than the prior match
+            if char_idx < split_off_idx {
+                split_off_idx = char_idx;
             }
         }
         first_string.chars().into_iter().take(split_off_idx).collect()
