@@ -1,36 +1,32 @@
-pub fn longest_common_prefix(strings: &[&str]) -> String {
-    if strings.len() == 0 { return "".to_string(); }
-    let mut match_vec = Vec::<(usize, char)>::new();
-    'string_itr: for (string_index, s) in strings.iter().enumerate() {
-        match string_index {
-            0 => {
-                //first string the match is entire string
-                s.chars().enumerate().for_each(|(idx, ch)| {
-                    match_vec.push((idx, ch));
-                });
-            }
-            _ => {
-                let mut schars_itr = s.chars().into_iter();
-                for ch_tup in &match_vec {
-                    if let Some(schar) = schars_itr.next() {
-                        if schar != (*ch_tup).1 {
-                            _ = match_vec.split_off((*ch_tup).0);
-                            continue 'string_itr;
+pub fn longest_common_prefix(strs: &[&str]) -> String {
+    if let Some(first_string) = strs.get(0) {
+        let mut split_off_idx = first_string.chars().count();
+        'string_iteration: for (string_index, s) in strs.iter().enumerate() {
+            match string_index {
+                0 => { }
+                _ => {
+                    for character_index_tuple in s.chars().enumerate() {
+                        if character_index_tuple.0 > split_off_idx {
+                            continue 'string_iteration;
+                        }
+                        if let Some(nth_char) = first_string.chars().nth(character_index_tuple.0) {
+                            if nth_char != character_index_tuple.1 {
+                                split_off_idx = character_index_tuple.0;
+                                continue 'string_iteration;
+                            }
                         }
                     }
-                    else {
-                        continue 'string_itr;
+                    if s.chars().count() < split_off_idx {
+                        split_off_idx = s.chars().count();
                     }
                 }
             }
         }
-
-        if match_vec.is_empty() {
-            break;
-        }
+        first_string.chars().into_iter().take(split_off_idx).collect()
     }
-
-    match_vec.into_iter().map(|(_, ch)| { ch }).collect()
+    else { 
+        "".to_string()
+    }
 }
 
 #[cfg(test)]
@@ -39,7 +35,11 @@ mod tests {
 
     #[test]
     fn test_prefixes() {
+        assert_eq!("a", longest_common_prefix(&["ab", "a"]));
+        assert_eq!("a", longest_common_prefix(&["a", "ab"]));
         assert_eq!("ab", longest_common_prefix(&["abcd", "ab", "abdcdef"]));
+        assert_eq!("abcd", longest_common_prefix(&["abcd", "abcd", "abcd"]));
         assert_eq!("", longest_common_prefix(&["abcd", "bc", "abdcdef"]));
+        assert_eq!("", longest_common_prefix(&["abdcdef", "abdcf", ""]));
     }
 }
