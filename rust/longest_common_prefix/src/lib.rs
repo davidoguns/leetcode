@@ -1,3 +1,4 @@
+
 pub fn longest_common_prefix(strs: &[&str]) -> String {
     if let Some(first_string) = strs.get(0) {
         let mut split_off_idx = first_string.chars().count();
@@ -18,8 +19,8 @@ pub fn longest_common_prefix(strs: &[&str]) -> String {
                 }
                 char_idx += 1;
             }
-            //if current string was fully iterated over, it may still be shorter
-            //than the prior match
+            //if current string was fully iterated over, and is shorter
+            //than the prior match, then shorten the match
             if char_idx < split_off_idx {
                 split_off_idx = char_idx;
             }
