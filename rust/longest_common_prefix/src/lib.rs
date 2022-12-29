@@ -1,4 +1,3 @@
-
 pub fn longest_common_prefix(strs: &[&str]) -> String {
     if let Some(first_string) = strs.get(0) {
         let mut split_off_idx = first_string.chars().count();

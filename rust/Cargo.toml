@@ -1,6 +1,6 @@
 [workspace]
 
 members = [
-    "romanToInt",
+    "roman_to_int",
     "longest_common_prefix",
 ]
