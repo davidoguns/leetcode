@@ -1,17 +1,17 @@
-use mini_redis::{client, Result};
+use chrono::Local;
+use std::time;
 
 #[tokio::main]
-async fn main() -> Result<()> {
-    // Open a connection to the mini-redis address
-    let mut client = client::connect("127.0.0.1:6379").await?;
-
-    // Set  the key "hello" with value "world"
-    client.set("hello", "world".into()).await?;
-
-    //Get key "hello"
-    let result = client.get("hello").await;
-
-    println!("got value from the server: result={:?}", result);
-
-    Ok(())
+async fn main() {
+    let start_time = chrono::Local::now();
+    let task_handle = tokio::spawn(async move {
+        println!("Started task at: {:?}", start_time.format("%Y-%m-%dT%H:%M:%S").to_string());
+        std::thread::sleep(time::Duration::from_secs(4));
+        Local::now()
+    });
+    
+    let result = task_handle.await.unwrap();
+    println!("Result of task is: {:?}", result.format("%Y-%m-%dT%H:%M:%S").to_string());
+    let time_since = result.time().signed_duration_since(start_time.time());
+    println!("Time to execute task was: {:?}", time_since.to_string());
 }
