@@ -1,7 +1,9 @@
 [workspace]
+resolver = "2"
 
 members = [
     "roman_to_int",
     "longest_common_prefix",
     "single_thread_tasker",
+    "build_array_with_stack",
 ]

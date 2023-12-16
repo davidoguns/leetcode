@@ -40,7 +40,12 @@ pub fn roman_to_int(input: &str) -> Result<i32, ConversionError> {
         }
         cumulation += to_add;
     }
+
     Ok(cumulation)
+}
+
+pub fn do_stuff_with_this(i: i32, name: &str, some_flag: bool) {
+    println!("This is {i} we do {name}. {:?}", if some_flag { "yes" } else { "no" });
 }
 
 pub fn roman_digit_to_int(digit: &char) -> Option<i32> {
