@@ -24,7 +24,9 @@ fn main() {
                 for (linenum, line) in contents.lines().enumerate() {
                     let mut first_digit = Option::<u32>::None;
                     let mut second_digit = Option::<u32>::None;
-                    for (char_position, ch) in line.chars().enumerate() {
+                    let mut char_enum_itr = line.chars().enumerate().into_iter();
+                    while let Some(char_tupl) = char_enum_itr.next() {
+                        let (char_position, ch) = char_tupl;
                         if ch.is_digit(10) {
                             match first_digit {
                                 Some(_x) => {
@@ -46,6 +48,11 @@ fn main() {
                                 let split_string = line.split_at(char_position).1;
                                 if split_string.starts_with(entry.0) {
                                     word_digit = Some(entry.1);
+                                    //we can skip examining the characters that follow once we've
+                                    //identified a numerical word
+                                    for _i in 1..entry.0.chars().count() {
+                                        char_enum_itr.next();
+                                    }
                                     break;
                                 }
                             } 
