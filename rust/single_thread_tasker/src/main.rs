@@ -4,6 +4,7 @@ use std::time;
 #[tokio::main]
 async fn main() {
     let start_time = chrono::Local::now();
+
     let task_handle = tokio::spawn(async move {
         println!("Started task at: {:?}", start_time.format("%Y-%m-%dT%H:%M:%S").to_string());
         std::thread::sleep(time::Duration::from_secs(4));

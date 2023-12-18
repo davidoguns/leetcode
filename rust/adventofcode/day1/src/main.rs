@@ -15,6 +15,7 @@ fn main() {
         ("zero", 0u32),
     ];
 
+    // program written to do the processing while it reads the file.
     match File::open("data.in") {
         Ok(mut file) => {
             let mut contents = String::new();
