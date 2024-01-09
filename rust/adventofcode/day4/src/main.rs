@@ -2,7 +2,7 @@ use std::collections::{HashSet, LinkedList};
 
 struct Card {
     #[warn(dead_code)]
-    id: u32,
+    _id: u32,
     winning_numbers: HashSet<u32>,
     drawn_numbers: LinkedList<u32>
 }
@@ -41,7 +41,7 @@ fn load_cards_from_file(filename: &str) -> Option<Vec<Card>> {
                             for num in drawn_numbers_str.split_whitespace() {
                                 drawn_numbers.push_back(num.parse().expect("Drawn number can't be parsed as a number."));
                             }
-                            cards.push(Card {id, winning_numbers, drawn_numbers});
+                            cards.push(Card {_id: id, winning_numbers, drawn_numbers});
                         }
                         else {
                             eprintln!("Line number {} does not match expected pattern!", line_num+1);
