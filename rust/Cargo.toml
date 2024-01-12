@@ -6,4 +6,5 @@ members = [
     "longest_common_prefix",
     "single_thread_tasker",
     "build_array_with_stack",
+    "median_two_arrays",
 ]
