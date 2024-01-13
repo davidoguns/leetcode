@@ -7,4 +7,5 @@ members = [
     "single_thread_tasker",
     "build_array_with_stack",
     "median_two_arrays",
+    "regex_pattern",
 ]
