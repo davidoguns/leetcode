@@ -29,7 +29,7 @@ public:
         vector<bool> word_matches;
         size_t num_words = words.size();
         size_t word_length = words.at(0).length();
-        const size_t last_possible_start = s.length() - (word_length * num_words);
+        const size_t last_possible_start = s.length() - (word_length * num_words) + 1;
 
         for (size_t start_char_index = 0; start_char_index < last_possible_start; ++start_char_index) {
             vector<string> word_candidates;
