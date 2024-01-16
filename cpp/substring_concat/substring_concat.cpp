@@ -69,7 +69,11 @@ int main(int argc, char* argv[]) {
     cout << "Solution #1" << endl;
     print_list(s.findSubstring(str, words));
 
-    vector<string> words2 = vector{string{"foo"}, string{"bar"}, string("the")};
+    vector<string> words2 = vector{string{"foo"}, string{"bar"}, string{"the"}};
     cout << "Solution #2" << endl;
     print_list(s.findSubstring("barfoofoobarthefoobarman", words2));
+
+    vector<string> words3 = vector{string{"word"}, string{"good"}, string{"best"}, string{"good"}};
+    cout << "Solution #3" << endl;
+    print_list(s.findSubstring("wordgoodgoodgoodbestword", words3));
 }
