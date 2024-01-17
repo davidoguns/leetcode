@@ -1,6 +1,5 @@
-#include <algorithm>
-#include <string>
 #include <vector>
+#include <unordered_map>
 #include <iostream>
 
 using namespace std;
@@ -25,31 +24,46 @@ public:
         if ((words.at(0).length() * words.size()) > s.length()) {
             return vector<int>{}; //string is too small to contain all substrings even once
         }
+
+        //build word -> word_count map
+        unordered_map<string, int> wordmap;
+        for (auto words_itr = words.begin(); words_itr != words.end(); words_itr++) {
+            auto entry = wordmap.find(*words_itr);
+            if (entry != wordmap.end()) {
+                entry->second += 1;
+            }
+            else {
+                wordmap[*words_itr] = 1;
+            }
+        }
         //now we can work
-        size_t num_words = words.size();
-        size_t word_length = words.at(0).length();
-        const size_t last_possible_start = s.length() - (word_length * num_words) + 1;
-        vector<bool> word_matches;
-        word_matches.resize(num_words, false);
+        const size_t word_length = words.at(0).length();
+        const size_t last_possible_start = s.length() - (word_length * words.size()) + 1;
 
         for (size_t start_char_index = 0; start_char_index < last_possible_start; ++start_char_index) {
-            //all word's must match
-            for (auto wmi = word_matches.begin(); wmi != word_matches.end(); wmi++) { *wmi = false; }
-            size_t words_matched = 0;
-            for (size_t wc_index = 0; wc_index < num_words; ++wc_index) {
+            //copy map (how expensive?)
+            unordered_map<string, int> wordmap_copy{wordmap};
+            bool full_consume = true;
+            for (size_t wc_index = 0; wc_index < words.size(); ++wc_index) {
                 auto word_candidate = s.substr(start_char_index + (wc_index * word_length), word_length);
-                size_t wmidx = 0;
-                for (auto wmi = word_matches.begin(); wmi != word_matches.end(); wmi++, wmidx++) {
-                    if (! *wmi && words[wmidx] == word_candidate) {
-                        *wmi = true;
-                        ++words_matched;
-                        break;
-                    }
+                auto word_found = wordmap_copy.find(word_candidate);
+                //if word is found in map
+                if (word_found != wordmap_copy.end()) {
+                    word_found->second -= 1; //decrement value
+                }
+                else {
+                    //if not found in map, then eearly exit this outer loop
+                    goto next_start_letter;
                 }
             }
-            if (words_matched == num_words) {
+            for (auto entry:wordmap_copy) {
+                //means we either overdecremented a value past zero, or haven't decremented a value to zero yet
+                full_consume = full_consume && entry.second == 0;
+            }
+            if (full_consume) { 
                 ret.push_back(start_char_index);
             }
+next_start_letter:;
         }
        return ret;
     }
