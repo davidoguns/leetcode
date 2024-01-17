@@ -31,6 +31,8 @@ void print_list(ListNode * const list) {
     }
 }
 
+//helper function for older version that merged all lists at the same time by continuously
+//selecting the minimum while traversing whichever was selected
 optional<ListNode *> get_min(vector<ListNode*>& lists) {
     optional<ListNode *> min_value{};
     vector<ListNode *>::iterator selected = lists.end();
