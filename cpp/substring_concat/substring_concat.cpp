@@ -52,7 +52,7 @@ public:
                     word_found->second -= 1; //decrement value
                 }
                 else {
-                    //if not found in map, then eearly exit this outer loop
+                    //if not found in map, then early exit this outer loop
                     goto next_start_letter;
                 }
             }
