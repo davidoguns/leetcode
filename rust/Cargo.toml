@@ -8,4 +8,5 @@ members = [
     "build_array_with_stack",
     "median_two_arrays",
     "regex_pattern",
+    "generate_parentheses",
 ]
