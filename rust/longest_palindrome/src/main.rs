@@ -4,12 +4,9 @@ impl Solution {
     pub fn longest_palindrome(s: String) -> String {
         let s_chars: Vec<char> = s.chars().collect();
         if s.is_empty() || s.len() == 1usize { return s };
-
         let (mut lp_start, mut lp_end) = (0usize, 1usize);
-       
         //start iteration on the second letter and look for odd length panlindromes
         for (ch_index, _ch) in s_chars.iter().enumerate().skip(1) {
-            // println!("ch_index = {}", ch_index);
             let (mut lps, mut lpe) = (ch_index, ch_index); // this is definitely a palindrome
             while s_chars.get(lps).unwrap() == s_chars.get(lpe).unwrap() {
                 if (lpe - lps) + 1 > (lp_end - lp_start) {
@@ -23,21 +20,8 @@ impl Solution {
                 lpe += 1;
             }
         }
-        
-        // println!("midway lp_start = {}; lp_end = {}", lp_start, lp_end);
-         
         for (ch_index, _ch) in s_chars.iter().enumerate().skip(1) {
             let (mut lps, mut lpe) = (ch_index - 1, ch_index);
-            // check if initial adjacent characters are the same
-            if s_chars.get(lps).unwrap() != s_chars.get(lpe).unwrap() {
-                continue;
-            }
-
-            if 3 > (lp_end - lp_start) {
-                lp_end = lpe + 1;
-                lp_start = lps;
-            }  
-
             while s_chars.get(lps).unwrap() == s_chars.get(lpe).unwrap() {
                 if (lpe - lps) + 1 > (lp_end - lp_start) {
                     lp_end = lpe + 1;
