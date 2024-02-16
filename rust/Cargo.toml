@@ -9,4 +9,5 @@ members = [
     "median_two_arrays",
     "regex_pattern",
     "generate_parentheses",
+    "longest_palindrome",
 ]
