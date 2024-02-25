@@ -10,4 +10,5 @@ members = [
     "regex_pattern",
     "generate_parentheses",
     "longest_palindrome",
+    "first_last_sorted",
 ]

@@ -8,8 +8,8 @@ pub fn generate_parens(n_open: i32,
                         n_closed: i32,
                         n_max: i32,
                         current_string: String,
-                        mut output: &mut Vec<String>)
-    -> () {
+                        mut output: &mut Vec<String>) -> ()
+{
     if current_string.len() as i32 == n_max * 2 {
         output.push(current_string);
     } else {
@@ -23,7 +23,7 @@ pub fn generate_parens(n_open: i32,
 }
 
 fn main() {
-    println!("Parenthesis combinations: {:?}", generate_parenthesis(3));
+    println!("Parentheses combinations: {:?}", generate_parenthesis(3));
 }
 
 #[cfg(test)]
