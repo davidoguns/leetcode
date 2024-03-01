@@ -4,20 +4,33 @@ pub fn generate_parenthesis(n: i32) -> Vec<String> {
     ret
 }
 
-pub fn generate_parens(n_open: i32,
-                        n_closed: i32,
-                        n_max: i32,
-                        current_string: String,
-                        mut output: &mut Vec<String>) -> ()
-{
+pub fn generate_parens(
+    n_open: i32,
+    n_closed: i32,
+    n_max: i32,
+    current_string: String,
+    mut output: &mut Vec<String>,
+) -> () {
     if current_string.len() as i32 == n_max * 2 {
         output.push(current_string);
     } else {
         if n_open < n_max {
-            generate_parens(n_open + 1, n_closed, n_max, format!("{}(", current_string), &mut output);
+            generate_parens(
+                n_open + 1,
+                n_closed,
+                n_max,
+                format!("{}(", current_string),
+                &mut output,
+            );
         }
         if n_closed < n_open {
-            generate_parens(n_open, n_closed + 1, n_max, format!("{})", current_string), &mut output);
+            generate_parens(
+                n_open,
+                n_closed + 1,
+                n_max,
+                format!("{})", current_string),
+                &mut output,
+            );
         }
     }
 }
@@ -32,8 +45,16 @@ pub mod test {
     #[test]
     pub fn test_gen_parens() {
         assert_eq!(vec!["(())", "()()"], generate_parenthesis(2));
-        assert_eq!(vec!["((()))", "(()())", "(())()", "()(())", "()()()"], generate_parenthesis(3));
-        assert_eq!(vec!["(((())))", "((()()))", "((())())", "((()))()", "(()(()))", "(()()())", "(()())()",
-                        "(())(())", "(())()()", "()((()))", "()(()())", "()(())()", "()()(())", "()()()()"], generate_parenthesis(4));
+        assert_eq!(
+            vec!["((()))", "(()())", "(())()", "()(())", "()()()"],
+            generate_parenthesis(3)
+        );
+        assert_eq!(
+            vec![
+                "(((())))", "((()()))", "((())())", "((()))()", "(()(()))", "(()()())", "(()())()",
+                "(())(())", "(())()()", "()((()))", "()(()())", "()(())()", "()()(())", "()()()()"
+            ],
+            generate_parenthesis(4)
+        );
     }
 }
