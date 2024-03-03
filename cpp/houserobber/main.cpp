@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 #include <tuple>
 
@@ -7,7 +6,6 @@ using namespace std;
 
 /**
  * Definition for a binary tree node.
-
  */
 struct TreeNode {
     int val;
@@ -18,6 +16,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+// https://leetcode.com/problems/house-robber-iii/submissions/1193059080/
 class Solution {
 public:
     int rob(TreeNode* root) {
