@@ -30,12 +30,11 @@ public:
     string serialize(TreeNode* root) {
         ostringstream ss(std::ostringstream::ate);
         serialize(root, ss);
-        return ss.str(); 
+        return std::move(ss.str()); 
     }
 
     void serialize(TreeNode* root, ostringstream &ss) {
         if (root == nullptr) return;
-
         ss << "(";
         ss << root->val;
         ss << ",";
@@ -48,8 +47,7 @@ public:
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
         size_t ch_index = 0;
-        auto r = buildTree(data, ch_index); 
-        return r;
+        return buildTree(data, ch_index); 
     }
 
     TreeNode *buildTree(string &data, size_t &ch_index) {
@@ -61,10 +59,18 @@ public:
         if (ch == '(') { //new node, expect (value,left,right)
             TreeNode *node = new TreeNode();
             char vchar = data.at(++ch_index);
+            bool neg = false;
+            if (vchar == '-') {
+                neg = true;
+                vchar = data.at(++ch_index);
+            }
             while (vchar >= '0' && vchar <= '9') {
                 node->val *= 10;
-                node->val += int(vchar - '0');
+                node->val += int(vchar) - int('0');
                 vchar = data.at(++ch_index);
+            }
+            if (neg) {
+                node->val *= -1;
             }
             ch_index++; //pluck off comma
             node->left = buildTree(data, ch_index);
