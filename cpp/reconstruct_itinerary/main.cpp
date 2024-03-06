@@ -1,6 +1,7 @@
 #include <iostream>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
-#include <map>
 #include <set>
 #include <algorithm>
 
@@ -8,7 +9,7 @@ using namespace std;
 
 class Solution {
 public:
-    typedef map<string, multiset<string>> TicketMap;
+    typedef unordered_map<string, multiset<string>> TicketMap;
     vector<string> findItinerary(vector<vector<string>> &tickets) {
         TicketMap ticket_map;
         vector<string> result;
@@ -24,35 +25,45 @@ public:
         }
 
         result.push_back("JFK");
-        if (findItinerary(ticket_map, result)) {
-            //actual positive result found, versus a "used what was possible" return
-            cout << "exhausted all tickets..." << endl;
-        }
-
+        findItinerary(ticket_map, result);
         return std::move(result); 
     }
 
+    void summarize_map(TicketMap &ticket_map) {
+        for_each(ticket_map.begin(), ticket_map.end(), [](auto entry) {
+            cout << "key " << entry.first << " {" << entry.second.size() << "} = ";
+            for_each(entry.second.begin(), entry.second.end(), [](auto value) {
+                cout << value << ", ";
+            });
+            cout << endl;
+        });
+    }
+
     bool findItinerary(TicketMap &ticket_map, vector<string> &result) {
-        if (!multimap_empty(ticket_map)) {
+        //an optimization would be: instead of counting the map size, over and over again, we could track it
+        //along with modifications that add and remove from it, and never count again
+        auto num_tickets = multimap_size(ticket_map);
+        if (num_tickets != 0) {
             auto current = result.back();
             auto dest_set_pair_itr = ticket_map.find(current);
             if (dest_set_pair_itr != ticket_map.end()) {
                 auto &dest_set = dest_set_pair_itr->second;
-                //make a copy of destination set so call stack nested modifications don't mess up this iteration
-                auto dest_set_cpy(dest_set);
-                for (auto dest_itr = dest_set_cpy.begin(); dest_itr != dest_set_cpy.end(); ++dest_itr) {
+                //we would possibly make a copy of destination set so call stack nested modifications don't mess up this iteration
+                //however, we actually need a de-duped set here so we don't entertain iterations that won't produce different results
+                //from here on out
+                set<string> dest_set_cpy;
+                dest_set_cpy.insert(dest_set.begin(), dest_set.end());
+                for (auto dest_itr = dest_set_cpy.cbegin(); dest_itr != dest_set_cpy.cend(); ++dest_itr) {
                     auto &dest_value = *dest_itr;
                     result.push_back(dest_value);
                     //we are going to modify the actual "multiset" here
                     dest_set.erase(dest_set.find(dest_value));
-                    if (multimap_empty(ticket_map) || findItinerary(ticket_map, result)) {
+                    if (num_tickets == 1 || findItinerary(ticket_map, result)) {
                         return true;
                     }
+                    dest_set.insert(dest_value);
                     result.pop_back();
                 }
-                //restore destination set as we captured before passing the map along.
-                //not sure if this does what I think
-                dest_set = std::move(dest_set_cpy); 
                 return false;
             }
             return false;
@@ -84,15 +95,22 @@ int main(int argc, char *argv[]) {
     //     cout << ap << ", ";
     // }
     // cout << endl;
-
-    vector<vector<string>> tickets2{{"JFK","KUL"},{"JFK","NRT"},{"NRT","JFK"}};
-    auto ans2 = s.findItinerary(tickets2);
+    //
+    // vector<vector<string>> tickets2{{"JFK","KUL"},{"JFK","NRT"},{"NRT","JFK"}};
+    // auto ans2 = s.findItinerary(tickets2);
+    // cout << "Solution: ";
+    // for (auto const &ap : ans2) {
+    //     cout << ap << ", ";
+    // }
+    // cout << endl;
+    //
+    vector<vector<string>> tickets3{{"JFK","SFO"},{"JFK","ATL"},{"SFO","JFK"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"},{"ATL","AAA"},{"AAA","BBB"},{"BBB","ATL"}};
+    auto ans3 = s.findItinerary(tickets3);
     cout << "Solution: ";
-    for (auto const &ap : ans2) {
+    for (auto const &ap : ans3) {
         cout << ap << ", ";
     }
     cout << endl;
-//
 
     return 0;
 }
