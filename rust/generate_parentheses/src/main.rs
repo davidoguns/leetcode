@@ -9,8 +9,8 @@ pub fn generate_parens(
     n_closed: i32,
     n_max: i32,
     current_string: String,
-    mut output: &mut Vec<String>,
-) -> () {
+    output: &mut Vec<String>,
+) {
     if current_string.len() as i32 == n_max * 2 {
         output.push(current_string);
     } else {
@@ -20,7 +20,7 @@ pub fn generate_parens(
                 n_closed,
                 n_max,
                 format!("{}(", current_string),
-                &mut output,
+                output,
             );
         }
         if n_closed < n_open {
@@ -29,7 +29,7 @@ pub fn generate_parens(
                 n_closed + 1,
                 n_max,
                 format!("{})", current_string),
-                &mut output,
+                output,
             );
         }
     }

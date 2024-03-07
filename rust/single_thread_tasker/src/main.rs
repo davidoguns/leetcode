@@ -11,11 +11,11 @@ async fn main() {
         Local::now()
     });
     
-    let _ = task_handle.await.and_then(|result| {
+    let _ = task_handle.await.map(|result| {
         println!("Task handle 'and then' executing...");
         println!("Result of task is: {:?}", result.format("%Y-%m-%dT%H:%M:%S").to_string());
         let time_since = result.time().signed_duration_since(start_time.time());
         println!("Time to execute task was: {:?}", time_since.to_string());
-        Ok(result)
+        result
     });
 }

@@ -1,11 +1,11 @@
 
 // https://leetcode.com/problems/longest-common-prefix/
 pub fn longest_common_prefix(strs: &[&str]) -> String {
-    if let Some(first_string) = strs.get(0) {
+    if let Some(first_string) = strs.first() {
         let mut split_off_idx = first_string.chars().count();
         'string_iteration: for s in strs.iter().skip(1) {
             let mut char_idx: usize = 0;
-            let mut first_string_citr = first_string.chars().into_iter();
+            let mut first_string_citr = first_string.chars();
             for character in s.chars() {
                 //don't compare more characters than the current longest match
                 if char_idx > split_off_idx {
@@ -26,7 +26,7 @@ pub fn longest_common_prefix(strs: &[&str]) -> String {
                 split_off_idx = char_idx;
             }
         }
-        first_string.chars().into_iter().take(split_off_idx).collect()
+        first_string.chars().take(split_off_idx).collect()
     }
     else { 
         "".to_string()

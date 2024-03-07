@@ -5,9 +5,9 @@ mod tests {
 
     #[test]
     fn invalid_roman_numbers() {
-        assert_eq!(true, roman_to_int("2#$^%&&").is_err());
-        assert_eq!(true, roman_to_int("not_a_roman").is_err());
-        assert_eq!(true, roman_to_int("-").is_err());
+        assert!(roman_to_int("2#$^%&&").is_err());
+        assert!(roman_to_int("not_a_roman").is_err());
+        assert!(roman_to_int("-").is_err());
     }
 
     #[test]

@@ -31,7 +31,7 @@ pub fn my_atoi(s: String) -> i32 {
     };
 
     let mut value = 0i64;
-    while ch_itr.peek().is_some_and(|ch| ch.is_digit(10)) {
+    while ch_itr.peek().is_some_and(|ch| ch.is_ascii_digit()) {
         let digit = ch_itr.next().unwrap();
         value = value.saturating_mul(10);
         value = value.saturating_add(digit.to_digit(10).unwrap() as i64);
@@ -46,9 +46,9 @@ pub fn divide(dividend: i32, divisor: i32) -> i32 {
     let is_positive = (dividend.is_positive() && divisor.is_positive()) || 
         (dividend.is_negative() && divisor.is_negative());
 
-    let mut abs_divd = dividend as i32;
+    let mut abs_divd = dividend;
     //we need to flip the divisor if subtracting by it will diverge from zero
-    let abs_divs = if is_positive { divisor } else { divisor * -1 } as i32;
+    let abs_divs = if is_positive { divisor } else { -divisor };
     let pred = 
         if abs_divd > 0 {
             |x| x > 0
@@ -59,14 +59,14 @@ pub fn divide(dividend: i32, divisor: i32) -> i32 {
     let mut count = 0i32;
     while pred(abs_divd) {
         count = count.saturating_add(1);
-        abs_divd = abs_divd - abs_divs;
+        abs_divd -= abs_divs;
     }
     //check if we've subtraced once too far
     if abs_divd != 0 {
-        count = count - 1;
+        count -= 1;
     }
     if !is_positive {
-        count = count * -1
+        count = -count
     }
     count
 }

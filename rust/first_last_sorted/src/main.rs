@@ -1,3 +1,4 @@
+#[warn(dead_code)]
 struct Solution;
 // https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/  
 impl Solution {
@@ -5,9 +6,9 @@ impl Solution {
         if let Some(found) = Self::binary_search(target, &nums) {
             let (mut lower, mut upper) = (found, found);
             upper += nums.get(found as usize..).unwrap().windows(2)
-                .take_while(|x| (*x).get(0) == (*x).get(1)).count() as i32;
+                .take_while(|x| (*x).first() == (*x).get(1)).count() as i32;
             lower -= nums.get(0..=found as usize).unwrap().windows(2).rev()
-                .take_while(|x| (*x).get(0) == (*x).get(1)).count() as i32;
+                .take_while(|x| (*x).first() == (*x).get(1)).count() as i32;
             
             // Rust seemed to have cleaned this code up a lot
             // I would want to ensure the performance and and story from .rev()

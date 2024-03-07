@@ -15,7 +15,7 @@ pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
     //no we know that neither is empty
     let mut nums1_itr = nums1.iter().peekable();
     let mut nums2_itr = nums2.iter().peekable();
-    let mut last_num = *nums1.iter().next().unwrap();
+    let mut last_num = *nums1.first().unwrap();
     let mut prev_num = Option::<i32>::None;
     for _i in 0..(((nums1.len()+nums2.len())/2)+1) {
         if nums1_itr.peek().is_some_and(|n| 
@@ -39,7 +39,7 @@ pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
 
 fn ez_median(nums: Vec<i32>) -> f64 {
     if nums.len() == 1 {
-        *nums.get(0).unwrap() as f64
+        *nums.first().unwrap() as f64
     } else if nums.len() % 2 == 0 {
         (*nums.get(nums.len()/2).unwrap() + *nums.get((nums.len()/2)-1).unwrap()) as f64 / 2f64
     } else {

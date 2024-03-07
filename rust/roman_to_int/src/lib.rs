@@ -21,10 +21,10 @@ pub fn roman_to_int(input: &str) -> Result<i32, ConversionError> {
     for (index, c) in character_vec.iter().enumerate() {
         if skip { skip = false; continue };
         let mut to_add: i32;
-        if let Some(value) = roman_digit_to_int(&c) {
+        if let Some(value) = roman_digit_to_int(c) {
             to_add = value;
             if let Some(next_char) = character_vec.get(index+1) {
-                if let Some(next_value) = roman_digit_to_int(&next_char) {
+                if let Some(next_value) = roman_digit_to_int(next_char) {
                     if next_value > value { //unspecific generalization of prefixes
                         to_add = next_value - value;
                         skip = true;

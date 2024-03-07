@@ -9,8 +9,8 @@ fn main() -> ! {
         match io::stdin().read_line(&mut buffer) {
             Ok(_) => {
                 let trimmed = buffer.trim();
-                if String::from("q").eq_ignore_ascii_case(&trimmed) ||
-                    String::from("quit").eq_ignore_ascii_case(&trimmed) {
+                if String::from("q").eq_ignore_ascii_case(trimmed) ||
+                    String::from("quit").eq_ignore_ascii_case(trimmed) {
                     std::process::exit(0);
                 }
                 else {
