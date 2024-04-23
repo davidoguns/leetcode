@@ -11,9 +11,11 @@ pub fn generate_parens(
     current_string: String,
     output: &mut Vec<String>,
 ) {
+    //if we have reached the string length limit, we've generated a solution
     if current_string.len() as i32 == n_max * 2 {
         output.push(current_string);
     } else {
+        //if we can open a parens, open it and continue generating
         if n_open < n_max {
             generate_parens(
                 n_open + 1,
@@ -23,6 +25,7 @@ pub fn generate_parens(
                 output,
             );
         }
+        //if we can close a parens, close it and continue generating 
         if n_closed < n_open {
             generate_parens(
                 n_open,
