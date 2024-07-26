@@ -33,7 +33,25 @@ struct TreeNode {
 
 class Solution {
 public:
+    void levelOrder(TreeNode* node, size_t level, vector<vector<int>> &result) {
+        if (node != nullptr) {
+            if (level == result.size()) {
+                //push in a new vector for space
+                result.push_back(std::move(vector<int>{}));
+            }
+            result[level].push_back(node->val);
+            levelOrder(node->left, level + 1, result);
+            levelOrder(node->right, level + 1, result);
+        }
+    }
+
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
+        vector<vector<int>> result;
+        levelOrder(root, 0, result);
+        return result;
+    }
+
+    vector<vector<int>> levelOrderBottom2(TreeNode* root) {
         if (root == nullptr) {
             return vector<vector<int>>{};
         }

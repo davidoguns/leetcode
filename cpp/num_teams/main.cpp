@@ -6,7 +6,6 @@
 using namespace std;
 
 // https://leetcode.com/problems/count-number-of-teams/
-
 class ISolution {
 public:
     virtual int numTeams(vector<int>& rating) = 0;
