@@ -3,9 +3,9 @@ package net.oguns.practice.max_level;
 import java.util.LinkedList;
 import java.util.Queue;
 
-class Solution {
-    record TreeNode(int val, TreeNode left, TreeNode right) { }
+import net.oguns.TreeNode;
 
+class Solution {
     public int maxLevel(TreeNode root) {
         Queue<TreeNode> nodeQueue = new LinkedList<TreeNode>();
         if (root == null) throw new RuntimeException("Tree is null, there is no max level");
