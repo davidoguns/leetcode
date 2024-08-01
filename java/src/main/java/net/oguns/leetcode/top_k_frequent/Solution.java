@@ -16,12 +16,11 @@ class Solution {
         };
         final HashMap<Integer, Integer> frequencyMap = new HashMap<>();
         Arrays.stream(nums).forEach(num -> {
-            Integer currentCount = frequencyMap.get(num);
-            if (currentCount == null) { //means it's 0 occurrences so far, this is the first
-                frequencyMap.put(num, 1);
-            } else {
-                frequencyMap.put(num, currentCount + 1);
-            }
+
+            frequencyMap.compute(num, (key, v) -> {
+                if (v == null) return 1;
+                return v + 1;
+            });
         });
         PriorityQueue<ValueFrequency> pq = new PriorityQueue<>();
         frequencyMap.forEach((value, count) -> {
