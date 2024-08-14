@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import net.oguns.TreeNode;
 
+
 class Solution {
     //helper function does the actual in order traversal.
     //It returns true (ending traversal) when kth node in order is traversed
@@ -32,14 +33,14 @@ class Solution {
         if (kthSmallestHelper(root, karr, num)) {
             return num[0];
         }
-        throw new RuntimeException("Could not find kth largest.");
+        throw new RuntimeException("Could not find kth smallest.");
     }
 
     //same traversal using a stack 
     public int kthSmallest(TreeNode root, int k) {
         Stack<TreeNode> nodeStack = new Stack<>();
         if (root == null) {
-            throw new RuntimeException("Could not find kth largest.");
+            throw new RuntimeException("Could not find kth smallest.");
         }
         TreeNode currentNode = root;
         //this is an "iterative" in order traversal
@@ -55,6 +56,6 @@ class Solution {
             }
             currentNode = currentNode.right();
         }
-        throw new RuntimeException("Could not find kth largest.");
+        throw new RuntimeException("Could not find kth smallest.");
     }
 }
