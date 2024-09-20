@@ -11,4 +11,5 @@ members = [
     "generate_parentheses",
     "longest_palindrome",
     "first_last_sorted",
+    "rem_dups_from_sorted_list",
 ]

@@ -1,0 +1,6 @@
+[package]
+name = "rem_dups_from_sorted_list"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
