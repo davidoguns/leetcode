@@ -20,13 +20,13 @@ class Solution {
             int childrenAddedOnNextLevel = 0;
             for (int i = 0; i < childrenAddedOnThisLevel; ++i) {
                 TreeNode child = nodeQueue.poll();
-                if (child.left() != null) {
+                if (child.left != null) {
                     ++childrenAddedOnNextLevel;
-                    nodeQueue.add(child.left());
+                    nodeQueue.add(child.left);
                 }
-                if (child.right() != null) {
+                if (child.right != null) {
                     ++childrenAddedOnNextLevel;
-                    nodeQueue.add(child.right());
+                    nodeQueue.add(child.right);
                 }
             }
             if (childrenAddedOnThisLevel > childrenAddedOnMaxLevel) {

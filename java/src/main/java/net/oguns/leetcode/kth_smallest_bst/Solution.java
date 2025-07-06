@@ -12,17 +12,17 @@ class Solution {
     //just an output parameter
     private boolean kthSmallestHelper(TreeNode current, int k[], int num[]) {
         boolean found = false;
-        if (current.left() != null) {
-             found = kthSmallestHelper(current.left(), k, num);
+        if (current.left != null) {
+             found = kthSmallestHelper(current.left, k, num);
             if (found) return true;
         }
         if ((--k[0]) == 0) {
             //this is the node to return
-            num[0] = current.val();
+            num[0] = current.val;
             return true;
         }
-        if (current.right() != null) {
-            found = kthSmallestHelper(current.right(), k, num);
+        if (current.right != null) {
+            found = kthSmallestHelper(current.right, k, num);
             if (found) return true;
         }
         return false;
@@ -47,14 +47,14 @@ class Solution {
         while (currentNode != null || !nodeStack.isEmpty()) {
             while (currentNode != null)  {
                 nodeStack.push(currentNode);
-                currentNode = currentNode.left();
+                currentNode = currentNode.left;
             }
             //process "this" node (pull it off stack)
             currentNode = nodeStack.pop();
             if (--k == 0) {
-                return currentNode.val();
+                return currentNode.val;
             }
-            currentNode = currentNode.right();
+            currentNode = currentNode.right;
         }
         throw new RuntimeException("Could not find kth smallest.");
     }

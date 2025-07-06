@@ -15,14 +15,14 @@ public final class PrintUtils {
             int numChildrenAdded = 0;
             for (int i = 0; i < numNodesOnLevel; ++i) {
                 TreeNode node = nodeQueue.poll();
-                System.out.print("{" + node.val() + "}");
-                if (node.left() != null) {
+                System.out.print("{" + node.val + "}");
+                if (node.left != null) {
                     ++numChildrenAdded;
-                    nodeQueue.add(node.left());
+                    nodeQueue.add(node.left);
                 }
-                if (node.right() != null) {
+                if (node.right != null) {
                     ++numChildrenAdded;
-                    nodeQueue.add(node.right());
+                    nodeQueue.add(node.right);
                 }
             }
             System.out.println("; level size = " + numNodesOnLevel);
