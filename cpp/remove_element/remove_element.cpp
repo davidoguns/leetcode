@@ -16,7 +16,7 @@ public:
                 //look for occurence of a value to remove using backscan
                 while (backscan_index < index) {
                     if (nums[backscan_index] == val) {
-                        nums[backscan_index] = nums[index]; 
+                        nums[backscan_index] = nums[index];
                         ++num_removed;
                         ++backscan_index;
                         break;
