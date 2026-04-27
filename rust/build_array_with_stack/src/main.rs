@@ -27,7 +27,7 @@ pub fn my_atoi(s: String) -> i32 {
 
     let is_positive = match ch_itr.next_if(|ch| *ch == '+' || *ch == '-') {
         Some(sign) => sign == '+',
-        None => true
+        None => true,
     };
 
     let mut value = 0i64;
@@ -43,18 +43,13 @@ pub fn my_atoi(s: String) -> i32 {
 }
 
 pub fn divide(dividend: i32, divisor: i32) -> i32 {
-    let is_positive = (dividend.is_positive() && divisor.is_positive()) || 
-        (dividend.is_negative() && divisor.is_negative());
+    let is_positive = (dividend.is_positive() && divisor.is_positive())
+        || (dividend.is_negative() && divisor.is_negative());
 
     let mut abs_divd = dividend;
     //we need to flip the divisor if subtracting by it will diverge from zero
     let abs_divs = if is_positive { divisor } else { -divisor };
-    let pred = 
-        if abs_divd > 0 {
-            |x| x > 0
-        } else {
-            |x| x < 0
-        };
+    let pred = if abs_divd > 0 { |x| x > 0 } else { |x| x < 0 };
 
     let mut count = 0i32;
     while pred(abs_divd) {
@@ -78,12 +73,20 @@ fn main() {
 
 #[cfg(test)]
 pub mod test {
-    use crate::{build_array, my_atoi, divide};
+    use crate::{build_array, divide, my_atoi};
 
     #[test]
     pub fn test_build_array_with_stack() {
         let arr = build_array(vec![1, 3], 3);
-        assert_eq!(vec!["Push".to_string(), "Push".to_string(), "Pop".to_string(), "Push".to_string()], arr);
+        assert_eq!(
+            vec![
+                "Push".to_string(),
+                "Push".to_string(),
+                "Pop".to_string(),
+                "Push".to_string()
+            ],
+            arr
+        );
     }
 
     #[test]

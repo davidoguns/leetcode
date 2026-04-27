@@ -17,10 +17,12 @@ class Solution {
         put('8', "tuv");
         put('9', "wxyz");
     }};
+
     public List<String> letterCombinations(String digits) {
         List<String> working = new LinkedList<>();
         List<String> nextStep = new LinkedList<>();
         Iterator<Integer> charItr = digits.chars().iterator();
+
         while (charItr.hasNext()) {
             char ch = (char)charItr.next().intValue();
             String nextLetters = digitToLetters.get(ch);
