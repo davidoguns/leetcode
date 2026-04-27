@@ -13,4 +13,5 @@ members = [
     "first_last_sorted",
     "rem_dups_from_sorted_list",
     "climb_stairs",
+    "binary_traversal",
 ]
