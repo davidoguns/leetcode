@@ -14,4 +14,5 @@ members = [
     "rem_dups_from_sorted_list",
     "climb_stairs",
     "binary_traversal",
+    "merge_sorted",
 ]
