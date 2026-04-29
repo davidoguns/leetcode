@@ -1,47 +1,45 @@
 #include <iostream>
+#include <unordered_map>
 #include <vector>
+#include <tuple>
 
 using namespace std;
 
+template <>
+struct std::hash<tuple<int,int>> {
+    size_t operator()(const tuple<int, int> &p) const {
+    //weak, but this isn't exactly the point here
+    return hash<int>{}(get<0>(p)) ^ hash<int>{}(get<1>(p));
+  }
+};
 
-// Not quite correct
 class Solution {
 public:
-    int maxArea(vector<int>& height) {
-        int front_index = 0;
-        int back_index = height.size() - 1;
-        int max_area = 0;
-
-        if (height.size() < 2) {
-            return 0; //must have at least two sides
+    int _maxArea(vector<int>& height, size_t front_index, size_t back_index, unordered_map<tuple<int, int>, int>& memo) {
+        if (front_index >= back_index) {
+            return 0;
+        }
+        
+        const tuple<int, int> key = make_tuple(front_index, back_index);
+        auto existing = memo.find(key);
+        if (existing != memo.end()) {
+            //short circuiting the calculation
+            return existing->second;
         }
 
-        while (front_index < back_index) {
-            int area = std::min<int>(height[front_index], height[back_index]) *
-                    (back_index - front_index);
-            // cout << "front index: " << front_index << "; back index: " << back_index 
-            //     << "; gap = " << (back_index - front_index) << endl;
-            // cout << "Area: " << area << "; front = " << height[front_index] << "; back = "
-            //     << height[back_index] << endl << endl;
-            if (area > max_area) {
-                max_area = area;
-            }
-            //decision which side to move is based on which will "shrink less"
-            //or "gain more". We have no choice but to lose 1 unit on X as we close
-            //in, but we do have a chose to vertically decline slower
-            int front_next_area = std::min<int>(height[front_index+1], height[back_index]) *
-                (back_index - (front_index+1));
-            int back_next_area = std::min<int>(height[front_index], height[back_index - 1]) *
-                ((back_index-1) - front_index);
-            if (front_next_area > back_next_area) {
-                //move the back down one
-                ++front_index;
-            } else {
-                --back_index;
-            }
-        } 
+        int area = (back_index - front_index) * std::min(height[front_index], height[back_index]);
+        int area_front_move = _maxArea(height, front_index+1, back_index, memo);
+        int area_back_move = _maxArea(height, front_index, back_index-1, memo);
+        int max_area = std::max(area, std::max(area_front_move, area_back_move));
+        memo.insert(make_pair(key, max_area));
 
-        return max_area; 
+        return max_area;
+    }
+
+    int maxArea(vector<int>& height) {
+        unordered_map<tuple<int, int>, int> memo;
+        int result = _maxArea(height, 0, height.size()-1, memo);
+        return result; 
     }
 };
 
