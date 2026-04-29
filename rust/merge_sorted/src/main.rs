@@ -9,20 +9,12 @@ impl Solution {
         let mut dest_idx: usize = 0;
         let mut nums2_idx: usize = 0;
         let mut nums1_drained: usize = 0;
-        //insert val, at index into vector. Shift all elements at idx
-        //and beyond down 1 index. Loses a value at the end of the vector.
-        //TODO: Rust probably has an ergonomic vec function for this.
-        //TODO: We also can limit the number of "shift right" that occurs
-        //      to only operate on the remaining left from nums1 vector
-        //      instead of going to the very end of the vector always.
-        let fn_shift_insert = |val: i32, idx: usize, vec: &mut Vec<i32>| {
-            //we will shift first by reverse iterating
-            let shift_rng = (idx..vec.len()).skip(1).rev();
-            for shift_idx in shift_rng {
-                if shift_idx as i32 - 1 >= 0 {
-                    vec[shift_idx] = vec[shift_idx-1];
-                }
-            }
+        //Shift all elements at idx and beyond right by 1.
+        //Loses a value at the end of the vector. Then insert
+        //value at idx.
+        let fn_shift_insert = |val: i32, idx: usize, shift_len: usize, vec: &mut Vec<i32>| {
+            let shift_rng = idx..(idx+shift_len);
+            vec.copy_within(shift_rng, idx+1);
             vec[idx] = val;
         };
         loop {
@@ -42,7 +34,7 @@ impl Solution {
             }
             //core logic, compare what's next in either nums1 and nums2
             if nums2[nums2_idx] < nums1[dest_idx] {
-                fn_shift_insert(nums2[nums2_idx], dest_idx, nums1);
+                fn_shift_insert(nums2[nums2_idx], dest_idx, m - nums1_drained, nums1);
                 nums2_idx += 1;
             } else {
                 nums1_drained += 1;
