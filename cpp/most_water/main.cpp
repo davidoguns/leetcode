@@ -13,7 +13,7 @@ public:
 
         //auto would be great ergonomics here, but sometimes we want to know what the type
         //would be in case we do have to spell it out, or want to
-        auto fn_scan_up_until = [](size_t idx, const vector<int> &vec, size_t idx_limit, int valueToExceed) -> size_t {
+        std::function<size_t(size_t, vector<int> const &, size_t, int)> fn_scan_up_until = [](size_t idx, const vector<int> &vec, size_t idx_limit, int valueToExceed) -> size_t {
            size_t new_idx = idx + 1;
            while (new_idx < idx_limit && vec[new_idx] <= valueToExceed) {
                ++new_idx;
