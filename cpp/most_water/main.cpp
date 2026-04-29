@@ -22,7 +22,7 @@ public:
         };
         std::function<size_t(size_t, vector<int> const &, size_t, int)> fn_scan_down_until = [](size_t idx, const vector<int> &vec, size_t idx_limit, int valueToExceed) -> size_t {
            size_t new_idx = idx - 1;
-           while (new_idx < idx_limit && vec[new_idx] <= valueToExceed) {
+           while (new_idx > idx_limit && vec[new_idx] <= valueToExceed) {
                --new_idx;
            }
            return new_idx;
@@ -57,5 +57,6 @@ int main(int argc, char *argv[]) {
     cout << "Max area: " << s.maxArea(vec4) << endl;
     vector<int> vec5{1, 2, 4, 3};
     cout << "Max area: " << s.maxArea(vec5) << endl;
+
     return 0;
 }
