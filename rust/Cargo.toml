@@ -1,5 +1,5 @@
 [workspace]
-resolver = "2"
+resolver = "3"
 
 members = [
     "roman_to_int",
@@ -15,4 +15,5 @@ members = [
     "climb_stairs",
     "binary_traversal",
     "merge_sorted",
+    "swap_node_pairs",
 ]
