@@ -15,7 +15,7 @@ public:
         just_added.insert(source);
 
         if (source == destination) {
-            return true; //early exist
+            return true; //early exit
         }
         
         while (!just_added.empty()) {
