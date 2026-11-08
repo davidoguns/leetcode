@@ -119,14 +119,22 @@ void print_list(const vector<T> &vec) {
 
 int main(int argc, char** argv) {
     Solution s;
-    vector<vector<int>> matrix;
-    matrix.push_back(vector{1, 2, 3, 4});
-    matrix.push_back(vector{5, 6, 7, 8});
-    matrix.push_back(vector{9, 10, 11, 12});
-    vector<int> r1 = s.spiralOrder(matrix);
-
+    vector<vector<int>> m1;
+    m1.push_back(vector{1, 2, 3, 4});
+    m1.push_back(vector{5, 6, 7, 8});
+    m1.push_back(vector{9, 10, 11, 12});
+    vector<int> r1 = s.spiralOrder(m1);
     cout << "Result: ";
     print_list(r1);
+    cout << endl;
+
+    vector<vector<int>> m2;
+    m2.push_back(vector{1, 2, 3});
+    m2.push_back(vector{4, 5, 6});
+    m2.push_back(vector{7, 8, 9});
+    vector<int> r2 = s.spiralOrder(m2);
+    cout << "Result: ";
+    print_list(r2);
     cout << endl;
     
 
