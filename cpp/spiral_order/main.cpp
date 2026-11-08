@@ -80,25 +80,23 @@ public:
         while (b.xLo != b.xHi && b.yLo != b.yHi) {
             if (!isInBounds(xOffset, yOffset, b)) {
                 //we need to do three things:
-                //1 -- undo the move that landed here;
+                //1 -- undo the move that landed here
                 //this is done that by leveraging the "opposite" movement, which is offset by 2
-                int undoTravelMode = currentTravelMode + 2;
-                if (undoTravelMode > 3) {
-                    undoTravelMode = undoTravelMode - 2;
-                }
+                int undoTravelMode = (currentTravelMode + 2) % 4;
                 get<0>(movement[undoTravelMode])(xOffset, yOffset);
                 
                 //2 -- reduce the bounds we hit
                 //adjust bounds based on the travel mode
                 get<1>(movement[currentTravelMode])(b);
 
-                //3 -- then move in the next direction
+                //3 -- then move in the next/correct direction
                 currentTravelMode++;
                 if (currentTravelMode > 3) {
                     currentTravelMode = 0;
                 }
                 get<0>(movement[currentTravelMode])(xOffset, yOffset);
             } else {
+                //we're in bounds now
                 result.push_back(matrix.at(yOffset).at(xOffset));
                 //move in the next direction (which may be found invalid)
                 get<0>(movement[currentTravelMode])(xOffset, yOffset);
@@ -136,7 +134,6 @@ int main(int argc, char** argv) {
     cout << "Result: ";
     print_list(r2);
     cout << endl;
-    
 
     return 0;
 }
