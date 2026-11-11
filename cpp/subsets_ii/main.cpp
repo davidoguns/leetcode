@@ -116,28 +116,34 @@ class Solution {
 int main(int argc, char** argv) {
     Solution s;
 
-    vector v1{1, 2, 3, 4};
-    auto r1 = s.subsets(v1);
-    cout << "Solution: ";
-    print_solution(r1);
-    cout << endl;
+    // vector v1{1, 2, 3, 4};
+    // auto r1 = s.subsets(v1);
+    // cout << "Solution: ";
+    // print_solution(r1);
+    // cout << endl;
+    //
+    // vector v2{1, 2, 3, 4, 4};
+    // auto r2 = s.subsets(v2);
+    // cout << "Solution: ";
+    // print_solution(r2);
+    // cout << endl;
+    //
+    // vector v3{1, 2, 2};
+    // auto r3 = s.subsets(v3);
+    // cout << "Solution: ";
+    // print_solution(r3);
+    // cout << endl;
+    //
+    // vector v4{5, 5, 5, 5, 5};
+    // auto r4 = s.subsets(v4);
+    // cout << "Solution: ";
+    // print_solution(r4);
+    // cout << endl;
 
-    vector v2{1, 2, 3, 4, 4};
-    auto r2 = s.subsets(v2);
+    vector v5{4, 4, 4, 1, 4};
+    auto r5 = s.subsets(v5);
     cout << "Solution: ";
-    print_solution(r2);
-    cout << endl;
-
-    vector v3{1, 2, 2};
-    auto r3 = s.subsets(v3);
-    cout << "Solution: ";
-    print_solution(r3);
-    cout << endl;
-
-    vector v4{5, 5, 5, 5, 5};
-    auto r4 = s.subsets(v4);
-    cout << "Solution: ";
-    print_solution(r4);
+    print_solution(r5);
     cout << endl;
 
     return 0;
