@@ -59,6 +59,7 @@ class Solution {
             results.push_back(empty_set);
 
             for (int const& num : nums) {
+                cout << "input num: " << num << endl;
                 //new sets to add at the end of this iteration
                 vector<vector<int>> new_sets_to_add;
 
@@ -89,6 +90,9 @@ class Solution {
                 auto add_set_itr = prior_add_map.find(num);
                 vector<vector<int>> new_prior_add_set;
                 if (add_set_itr != prior_add_map.end()) {
+                    cout << "seeing " << num << " again. Prior add:";
+                    print_solution(add_set_itr->second);
+                    cout << endl;
                     for (auto priorSetItr = add_set_itr->second.begin(); priorSetItr != add_set_itr->second.end(); ++priorSetItr) {
                         auto priorSet = *priorSetItr;
                         vector<int> newset;
